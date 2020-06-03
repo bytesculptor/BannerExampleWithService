@@ -15,10 +15,13 @@
  */
 package com.google.android.gms.example.bannerexample;
 
+import android.content.Intent;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
@@ -37,10 +40,16 @@ public class MyActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my);
 
+        // foreground service
+        Intent serviceIntent = new Intent(this, MyService.class);
+        startService(serviceIntent);
+
+
         // Initialize the Mobile Ads SDK.
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) {}
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
         });
 
         // Gets the ad view defined in layout/ad_fragment.xml with ad unit ID set in
