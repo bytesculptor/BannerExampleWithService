@@ -32,10 +32,10 @@ public class MyService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        createNotificationChannels();
+
         if (intent != null) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                createNotificationChannels();
+                createNotificationChannel();
                 startForegroundForService();
             } else {
                 startForeground(1, new Notification());
@@ -52,14 +52,14 @@ public class MyService extends Service {
             @Override
             public void onReceive(Context context, Intent intent) {
                 long timeStamp = System.currentTimeMillis();
-                Log.d(TAG, "onReceive: " + timeStamp);
+                Log.d(TAG, "ACTION_BATTERY_CHANGED received in foreground service " + timeStamp);
             }
         };
         this.registerReceiver(this.mBroadcastReceiver, intentFilter);
     }
 
 
-    private void createNotificationChannels() {
+    private void createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channelBackground = new NotificationChannel(SERVICE_NOTIFICATION_CHANNEL_ID, "Test channel", NotificationManager.IMPORTANCE_HIGH);
             channelBackground.setDescription("Channel for tests");
